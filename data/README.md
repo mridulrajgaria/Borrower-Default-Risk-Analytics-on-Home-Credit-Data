@@ -67,7 +67,7 @@ To reproduce the analysis locally:
 
 During exploratory analysis and SQL segmentation, the following fields are engineered:
 
-* **`fee_to_income_pct`**: Monthly payment burden calculated as `(AMT_ANNUITY / AMT_INCOME_TOTAL) * 100`.
+* **`fee_to_income_pct`**: Annuity-to-Annual-Income Ratio calculated as `(AMT_ANNUITY / AMT_INCOME_TOTAL) * 100`. In this dataset, `AMT_ANNUITY` denotes the monthly installment while `AMT_INCOME_TOTAL` denotes annual gross income; this metric evaluates a single monthly installment relative to annual income.
 * **`income_segment`**: Categorical tier based on `AMT_INCOME_TOTAL` (in dataset currency units):
   * `Low Income`: < 100,000
   * `Middle Income`: 100,000 to 200,000

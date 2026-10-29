@@ -9,7 +9,7 @@
 
 ## 1. Executive Summary
 
-This report synthesizes empirical findings from a credit risk evaluation of **307,511 consumer loan applications**. The overall portfolio exhibits an **8.07% default rate** (24,825 non-performing loans), which sits substantially above conventional prime retail banking benchmarks (5.0% – 7.0%). 
+This report synthesizes empirical findings from a credit risk evaluation of **307,511 consumer loan applications**. The overall portfolio exhibits an **8.07% default rate** (24,825 non-performing loans), serving as the baseline benchmark against which all borrower sub-segments are analyzed.
 
 The primary business challenge is that uniform loan origination standards expose the institution to outsized credit losses, particularly among low-income earners, specific vulnerable labor occupations, and borrowers demonstrating repeated credit-seeking stress.
 
@@ -25,17 +25,20 @@ By applying structured SQL segmentation, debt-burden ratio analysis, and behavio
 * **Defaulted Loans (`TARGET = 1`):** 24,825 (8.07%)
 * **Diagnostic Implication:** The strong 92:8 class imbalance underscores that aggregate performance metrics can mask pockets of severe risk. Credit scoring cannot rely on naive approval rules; granular policy cutoffs are required.
 
-### Finding 2: The Payment-Burden Paradox Across Income Tiers
-Analysis of monthly debt servicing relative to annual gross income (`fee_to_income_pct = (AMT_ANNUITY / AMT_INCOME_TOTAL) * 100`) reveals an acute structural vulnerability across income segments:
+### Finding 2: Payment Burden: Annuity-to-Annual-Income Dynamics
+A critical dimension of borrower capacity is evaluating regular loan installments against declared income. In the Home Credit dataset schema:
+* `AMT_INCOME_TOTAL` represents total declared **annual income**.
+* `AMT_ANNUITY` represents the **monthly loan installment** amount.
+* The ratio `(AMT_ANNUITY / AMT_INCOME_TOTAL) * 100` calculates the **Annuity-to-Annual-Income Ratio** (the percentage of annual income absorbed by a single monthly payment).
 
-| Income Tier | Annual Income Range (Units) | Borrower Volume | Default Rate | Avg Fee-to-Income % | Avg Loan Size (Units) |
+| Income Tier | Annual Income Range (Units) | Borrower Volume | Default Rate | Avg Annuity-to-Annual-Income % | Avg Loan Size (Units) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Low Income** | < 100,000 | 63,698 (20.7%) | **8.20%** | **23.99%** | 341,200 |
 | **Middle Income**| 100,000 – 200,000 | 155,898 (50.7%) | **8.55%** | **18.23%** | 604,800 |
 | **High Income** | > 200,000 | 87,915 (28.6%) | **7.14%** | **13.58%** | 775,400 |
 
-* **Empirical Takeaway:** Low-income borrowers dedicate **24.0%** of their annual income to loan installments—nearly **1.8x the debt service burden** of high-income peers (13.6%). 
-* Defaulters receive lower absolute credit amounts on average (557,779 units vs 602,648 units for non-defaulters) yet pay virtually identical monthly annuities (~26,482 vs ~27,164). This observed association indicates that defaults correlate with **disproportionate monthly installment strain**, rather than gross borrowing size alone.
+* **Empirical Takeaway:** For low-income borrowers, a single monthly loan installment equals **24.0% of their total annual income**—nearly **1.8x the ratio** of high-income peers (13.6%). 
+* Defaulters receive lower absolute credit amounts on average (557,779 units vs 602,648 units for non-defaulters) yet pay virtually identical monthly annuities (~26,482 vs ~27,164). This confirms that default risk correlates with **disproportionate monthly installment strain relative to earnings capacity**, rather than gross loan principal alone.
 
 ### Finding 3: Occupation Category as a Critical Risk Stratifier
 When segmenting by verified occupation, default rates vary across a wide spectrum from **1.7% to 17.2%**:

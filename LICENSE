@@ -22,7 +22,15 @@ SOFTWARE.
 
 ---
 
-### Scope of License & Third-Party Terms
+### Attribution, Upstream Lineage & Component Licensing Scope
 
-1. **Software & Documentation Scope:** The MIT License above applies exclusively to the analytical code, SQL queries, Jupyter notebook source code, configuration scripts, and documentation authored within this repository.
-2. **Third-Party Data Terms:** This license does not convey rights to, relicense, or permit redistribution of raw dataset files. The Home Credit Default Risk dataset is subject to the [Kaggle Competition Rules and Terms of Service](https://www.kaggle.com/competitions/home-credit-default-risk/rules). Any user of this project must obtain the data independently in accordance with the competition terms.
+1. **Authorship & Scope of MIT License:**
+   * The MIT License above applies to the analytical code, SQL scripts, Jupyter notebook architecture, visualization code, and documentation authored by Mridul Rajgaria within this repository.
+   
+2. **Attribution to Original Project Concept:**
+   * This project builds upon the exploratory analysis workflow, SQL segmentation ideas, and Power BI report structure originally created by **Estefania Marcel** in [tefimarcel/credit-risk-analysis](https://github.com/tefimarcel/credit-risk-analysis).
+   * **Licensing Status of Original Repository:** The original repository does not contain an explicit root open-source license file. Under GitHub's Terms of Service and standard copyright law, default copyright is retained by the original author.
+   * **Power BI Dashboard Asset:** The binary file (`dashboard/credit_risk_dashboard.pbix`) originates from the public educational work of Estefania Marcel and is preserved here with full attribution for non-commercial educational review and portfolio demonstration. To ensure reproducibility without reliance on third-party binaries, complete independent recreation instructions, DAX formulas, and an automated data pipeline are provided in [`dashboard/README.md`](dashboard/README.md).
+
+3. **Third-Party Dataset Terms:**
+   * The underlying loan application data is provided by Home Credit under the [Kaggle Competition Rules and Terms of Use](https://www.kaggle.com/competitions/home-credit-default-risk/rules). This repository does not redistribute, relicense, or convey ownership over the raw competition data.

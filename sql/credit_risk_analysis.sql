@@ -18,15 +18,18 @@
 -- 2. Running Queries via SQLite CLI:
 --        sqlite3 credit_risk.db < sql/credit_risk_analysis.sql
 --
--- 3. Schema Reference:
+-- 3. Schema Reference & Periodicity:
 --    - SK_ID_CURR: Application unique ID
 --    - TARGET: 1 = Default / Payment difficulty, 0 = Repaid loan
---    - AMT_INCOME_TOTAL: Total annual income
+--    - AMT_INCOME_TOTAL: Total annual gross income
 --    - AMT_CREDIT: Total loan amount
---    - AMT_ANNUITY: Monthly payment / annuity
+--    - AMT_ANNUITY: Monthly loan installment (annuity)
 --    - NAME_CONTRACT_TYPE: 'Cash loans' or 'Revolving loans'
 --    - OCCUPATION_TYPE: Borrower occupation category
 --    - AMT_REQ_CREDIT_BUREAU_YEAR: Number of credit bureau queries in last 12 months
+--    * Periodicity Note: In Home Credit data, AMT_ANNUITY is a monthly installment,
+--      while AMT_INCOME_TOTAL is annual income. The ratio (AMT_ANNUITY / AMT_INCOME_TOTAL) * 100
+--      measures one monthly payment as a % of annual income (Annuity-to-Annual-Income Ratio).
 -- ==============================================================================
 
 
