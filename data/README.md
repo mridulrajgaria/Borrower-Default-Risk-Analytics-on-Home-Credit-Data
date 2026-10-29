@@ -68,10 +68,10 @@ To reproduce the analysis locally:
 During exploratory analysis and SQL segmentation, the following fields are engineered:
 
 * **`fee_to_income_pct`**: Monthly payment burden calculated as `(AMT_ANNUITY / AMT_INCOME_TOTAL) * 100`.
-* **`income_segment`**: Categorical tier based on `AMT_INCOME_TOTAL`:
-  * `Low Income`: < $100,000
-  * `Middle Income`: $100,000 to $200,000
-  * `High Income`: > $200,000
+* **`income_segment`**: Categorical tier based on `AMT_INCOME_TOTAL` (in dataset currency units):
+  * `Low Income`: < 100,000
+  * `Middle Income`: 100,000 to 200,000
+  * `High Income`: > 200,000
 * **`inquiries_segment`**: Tier based on `AMT_REQ_CREDIT_BUREAU_YEAR`:
   * `No Inquiries`: 0
   * `Low Inquiries`: 1 – 3

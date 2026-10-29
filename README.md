@@ -42,12 +42,13 @@ A non-bank financial institution providing consumer credit to underbanked applic
 
 ---
 
-## 2. Dataset Overview & Attribution
+## 2. Dataset Overview & Scope
 
 * **Source:** [Home Credit Default Risk (Kaggle Competition)](https://www.kaggle.com/competitions/home-credit-default-risk)
 * **Primary Table:** `application_train.csv` (307,511 rows × 122 columns)
 * **Target Metric:** `TARGET` (Binary: `0` = Loan repaid on time, `1` = Client encountered payment difficulty / defaulted)
-* **Attribution:** Original exploratory notebook and Power BI structure created by Estefania Marcel. Refactored, extended, cleaned, and standardized into an enterprise analytics repository by Mridul Rajgaria.
+* **Monetary Units:** All monetary values (`AMT_INCOME_TOTAL`, `AMT_CREDIT`, `AMT_ANNUITY`, `AMT_GOODS_PRICE`) represent raw dataset currency units as provided in the source competition dataset.
+* **Author:** Mridul Rajgaria
 
 ---
 
@@ -101,14 +102,14 @@ Borrower-Default-Risk-Analytics-on-Home-Credit-Data/
 
 ### Sentinel Values & Outliers
 * **Sentinel in `DAYS_EMPLOYED`:** Contains the value `365,243` days (~1,000 years), an administrative code denoting pensioners and unemployed applicants.
-* **Income Outliers:** Gross annual income ranges up to $117,000,000 against a median of $147,150. To prevent distortions, analysis leverages categorizations (`Low`, `Middle`, `High`).
+* **Income Outliers:** Gross annual income ranges up to 117,000,000 units against a median of 147,150 units. To prevent distortions, analysis leverages categorizations (`Low`, `Middle`, `High`).
 
 ### Derived Financial Metrics
 * **`fee_to_income_pct`**: Monthly installment burden computed as `(AMT_ANNUITY / AMT_INCOME_TOTAL) * 100`.
-* **`income_segment`**:
-  * Low Income: `< $100,000` (20.7% of borrowers)
-  * Middle Income: `$100,000 – $200,000` (50.7% of borrowers)
-  * High Income: `> $200,000` (28.6% of borrowers)
+* **`income_segment`** (denominated in currency units):
+  * Low Income: `< 100,000` (20.7% of borrowers)
+  * Middle Income: `100,000 – 200,000` (50.7% of borrowers)
+  * High Income: `> 200,000` (28.6% of borrowers)
 * **`inquiries_segment`**: Tiers based on annual credit bureau inquiries (`0`, `1–3`, `4–6`, `7+`).
 
 ---
@@ -202,13 +203,15 @@ ORDER BY income_tier, default_rate_pct DESC;
 
 The interactive Power BI file ([`dashboard/credit_risk_dashboard.pbix`](dashboard/credit_risk_dashboard.pbix)) delivers immediate portfolio visibility across two structured views:
 
+> **Note on Visual Previews:** The figures below are **illustrative layout previews** reconstructed directly from the Power BI report specifications, data model schema, and underlying portfolio metrics. The live, interactive report is preserved in [`dashboard/credit_risk_dashboard.pbix`](dashboard/credit_risk_dashboard.pbix). All monetary quantities reflect dataset currency units as provided in the source data.
+
 ### Page 1: Credit Risk Overview
-![Power BI Page 1 — Overview](images/dashboard_page1_overview.png)
+![Illustrative Dashboard Layout Preview: Page 1 — Credit Risk Overview](images/dashboard_page1_overview.png)
 * **KPI Header:** Tracks Total Applicants (`307,511`), Overall Default Rate (`8.07%`), and Average Payment Burden (`18.1%`).
 * **Visuals:** Income segment default rates, payment burden breakdown, and target distribution donut chart.
 
 ### Page 2: Behavioral Risk Signals
-![Power BI Page 2 — Behavioral Signals](images/dashboard_page2_behavioral_signals.png)
+![Illustrative Dashboard Layout Preview: Page 2 — Behavioral Risk Signals](images/dashboard_page2_behavioral_signals.png)
 * **Risk Stratification:** 10 riskiest occupations mapped against the 8.07% portfolio benchmark.
 * **Credit Inquiries:** Default rates grouped by annual bureau inquiries (`0`, `1–3`, `4–6`, `7+`).
 
@@ -220,9 +223,9 @@ The interactive Power BI file ([`dashboard/credit_risk_dashboard.pbix`](dashboar
 
 | Metric / Segment | Empirical Result | Business Implication |
 | :--- | :--- | :--- |
-| **Portfolio Default Rate** | **8.07%** (24,825 defaults) | Above industry baseline (5%–7%), requiring tightening. |
+| **Portfolio Default Rate** | **8.07%** (24,825 defaults) | Above industry baseline (5%–7%), requiring portfolio risk management. |
 | **Low-Income Payment Burden** | **24.0%** fee-to-income ratio | Nearly 1.8x the debt service burden of high-income clients (13.6%). |
-| **Defaulter Loan Characteristics** | Defaulters borrow **$557k vs $602k** for non-defaulters | Defaults are driven by payment strain relative to income, not principal size. |
+| **Defaulter Loan Characteristics** | Defaulters borrow **557,779 vs 602,648 units** | Defaults correlate with payment strain relative to income, not principal size. |
 | **Highest Risk Occupation** | Low-skill Laborers: **17.15% default** | More than double the portfolio baseline (2.12x risk multiplier). |
 | **Credit Bureau Search Velocity** | 7+ inquiries: **9.28% default rate** | 30.1% higher risk than borrowers with 0 inquiries (7.13%). |
 | **Contract Type Variance** | Cash loans: **8.35%** vs Revolving: **5.48%** | Selection bias: revolving loans apply stricter pre-screening filters. |
@@ -231,12 +234,14 @@ For a comprehensive narrative report, see [reports/key_findings.md](reports/key_
 
 ---
 
-## 10. Actionable Underwriting Recommendations
+## 10. Underwriting Recommendations & Hypotheses for Testing
 
-1. **Enforce a 20% DTI Cap on Low-Income Borrowers:** Cap monthly installment-to-income ratio at 20% for applicants earning under $100k. Rather than rejecting applicants, lengthen repayment tenure to compress monthly annuity obligations.
-2. **Implement Risk-Based Pricing for Volatile Occupations:** Introduce a **150–250 bps risk premium** on loans issued to Low-skill Laborers, Drivers, and Service/Hospitality staff to cover expected credit loss (ECL).
-3. **Automated Gating on Bureau Inquiries:** Route applicants with 7+ annual bureau inquiries to manual underwriting or cap maximum credit at 75% of requested amount.
-4. **Expand Revolving Credit Lines to Prime Tiers:** Promote revolving credit products among high earners (> $200k) where historical default rates remain low (5.48%).
+> **Methodological Disclaimer (Association vs. Causation):** The findings presented here are observational and descriptive. Statistical associations (such as correlations between high debt burdens or bureau inquiries and default rates) highlight risk concentration but do not establish causality. Modifying loan terms or policy cutoffs may induce behavioral shifts, adverse selection, or unobserved confounding. All proposed actions should be treated as business hypotheses to be validated through controlled champion/challenger pilots prior to production rollout.
+
+1. **Test Debt-to-Income (DTI) Caps on Low-Income Borrowers:** Evaluate instituting an operational cap on monthly installment-to-income ratio (e.g. 20%) for applicants earning under 100,000 units. Explore tenure extensions to reduce monthly annuity obligations rather than blanket rejections.
+2. **Evaluate Risk-Based Pricing for Volatile Occupations:** Test whether introducing a **150–250 bps risk premium** on loans issued to volatile roles (Low-skill Laborers, Drivers, Hospitality) appropriately covers expected credit loss (ECL), and test enhanced income verification for credit amounts above 500,000 units.
+3. **Automated Gating on Bureau Inquiries:** Route applicants with 7+ annual bureau inquiries to manual underwriting or cap maximum approved credit to mitigate multi-lender credit stacking risks.
+4. **Pilot Revolving Credit Lines to Prime Tiers:** Explore offering revolving credit products to applicants in high-income tiers (> 200,000 units) and historically low-risk occupations, tracking performance against baseline cash loan default rates.
 
 ---
 
@@ -281,8 +286,8 @@ jupyter notebook notebooks/credit_risk_analysis.ipynb
 
 ---
 
-## 13. License & Attribution
+## 13. License & Scope of Terms
 
-* This project is distributed under the terms of the **[MIT License](LICENSE)**.
-* **Dataset Credit:** Home Credit Default Risk Competition on Kaggle.
+* **Source Code & Documentation:** All analytical code, SQL queries, Jupyter notebook source code, and written documentation in this repository are distributed under the **[MIT License](LICENSE)**.
+* **Dataset Terms:** The underlying Home Credit Default Risk dataset is governed by the [Kaggle Competition Rules and Terms of Use](https://www.kaggle.com/competitions/home-credit-default-risk/rules). This repository does not redistribute or convey proprietary rights to the raw competition data.
 * **Author:** **Mridul Rajgaria** ([GitHub](https://github.com/mridulrajgaria))

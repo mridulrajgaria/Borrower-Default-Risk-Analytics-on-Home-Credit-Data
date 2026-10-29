@@ -12,8 +12,10 @@ It is structured into two core analytical views:
 
 ## Dashboard Architecture & Views
 
+> **Note on Visual Previews:** The figures below are **illustrative layout previews** reconstructed directly from the Power BI report specifications, data model schema, and underlying portfolio metrics. The live, interactive report is preserved in [`credit_risk_dashboard.pbix`](credit_risk_dashboard.pbix). All monetary quantities reflect dataset currency units as provided in the source data.
+
 ### Page 1: Credit Risk Overview
-![Dashboard Page 1 — Credit Risk Overview](../images/dashboard_page1_overview.png)
+![Illustrative Dashboard Layout Preview: Page 1 — Credit Risk Overview](../images/dashboard_page1_overview.png)
 
 #### Visual Elements:
 * **KPI Card 1: Total Applicants**
@@ -26,9 +28,9 @@ It is structured into two core analytical views:
   * *Metric:* `18.1%` (Fee-to-Income / Annuity-to-Income)
   * *Business Context:* Average share of monthly income dedicated to servicing the loan installment.
 * **Clustered Bar Chart: Default Rate % by Income Segment**
-  * Low Income (< $100k): **8.20%**
-  * Middle Income ($100k - $200k): **8.55%**
-  * High Income (> $200k): **7.14%**
+  * Low Income (< 100,000): **8.20%**
+  * Middle Income (100,000 - 200,000): **8.55%**
+  * High Income (> 200,000): **7.14%**
 * **Clustered Bar Chart: Payment Burden (Fee-to-Income %) by Income Segment**
   * Low Income: **23.99%**
   * Middle Income: **18.23%**
@@ -40,7 +42,7 @@ It is structured into two core analytical views:
 ---
 
 ### Page 2: Behavioral Risk Signals
-![Dashboard Page 2 — Behavioral Risk Signals](../images/dashboard_page2_behavioral_signals.png)
+![Illustrative Dashboard Layout Preview: Page 2 — Behavioral Risk Signals](../images/dashboard_page2_behavioral_signals.png)
 
 #### Visual Elements:
 * **Horizontal Bar Chart: Top 10 Riskiest Occupations by Default Rate %**

@@ -80,9 +80,9 @@ GROUP BY TARGET;
 -- ==============================================================================
 SELECT 
     CASE 
-        WHEN AMT_INCOME_TOTAL < 100000 THEN '1. Low Income (< $100k)'
-        WHEN AMT_INCOME_TOTAL BETWEEN 100000 AND 200000 THEN '2. Middle Income ($100k - $200k)'
-        ELSE '3. High Income (> $200k)'
+        WHEN AMT_INCOME_TOTAL < 100000 THEN '1. Low Income (< 100k)'
+        WHEN AMT_INCOME_TOTAL BETWEEN 100000 AND 200000 THEN '2. Middle Income (100k - 200k)'
+        ELSE '3. High Income (> 200k)'
     END AS income_segment,
     COUNT(1) AS total_borrowers,
     SUM(TARGET) AS total_defaults,

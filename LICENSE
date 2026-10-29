@@ -21,6 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ---
-Attribution & Dataset Acknowledgments:
-- Dataset Source: Home Credit Default Risk Competition (Kaggle).
-- Original EDA & Analysis Base: Estefania Marcel. Refactored, extended, and professionalized for enterprise descriptive credit risk analytics.
+
+### Scope of License & Third-Party Terms
+
+1. **Software & Documentation Scope:** The MIT License above applies exclusively to the analytical code, SQL queries, Jupyter notebook source code, configuration scripts, and documentation authored within this repository.
+2. **Third-Party Data Terms:** This license does not convey rights to, relicense, or permit redistribution of raw dataset files. The Home Credit Default Risk dataset is subject to the [Kaggle Competition Rules and Terms of Service](https://www.kaggle.com/competitions/home-credit-default-risk/rules). Any user of this project must obtain the data independently in accordance with the competition terms.
